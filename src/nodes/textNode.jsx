@@ -18,7 +18,7 @@ export const TextNode = ({ id, data }) => {
   const handleTextChange = (e) => {
     setCurrText(e.target.value);
     if (textareaRef.current) {
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      setHeight(`${textareaRef.current.scrollHeight}px`);
     }
   };
 
