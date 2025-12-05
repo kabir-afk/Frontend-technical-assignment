@@ -18,7 +18,7 @@ export const InputNode = ({ id, data }) => {
   };
 
   return (
-    <div style={{ width: 200, height: 80, border: "1px solid" }}>
+    <div style={{ width: 200, border: "1px solid" }}>
       <div>
         <span>Input</span>
       </div>
