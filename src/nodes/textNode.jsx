@@ -22,7 +22,7 @@ export const TextNode = ({ id, data }) => {
             type="text"
             value={currText}
             onChange={handleTextChange}
-            className="textNode"
+            className="border-2 border-amber-500"
           />
         </label>
       </div>

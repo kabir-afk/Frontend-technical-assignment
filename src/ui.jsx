@@ -4,13 +4,13 @@
 
 import { useState, useRef, useCallback } from "react";
 import ReactFlow, { Controls, Background, MiniMap } from "reactflow";
-import { useStore } from "./store";
+import { useStore } from "./store.jsx";
 import { shallow } from "zustand/shallow";
-import { InputNode } from "./nodes/inputNode";
-import { LLMNode } from "./nodes/llmNode";
-import { OutputNode } from "./nodes/outputNode";
-import { TextNode } from "./nodes/textNode";
-import { NodeOne } from "./nodes/NodeOne";
+import { InputNode } from "./nodes/inputNode.jsx";
+import { LLMNode } from "./nodes/llmNode.jsx";
+import { OutputNode } from "./nodes/outputNode.jsx";
+import { TextNode } from "./nodes/textNode.jsx";
+import { NodeOne } from "./nodes/NodeOne.jsx";
 
 import "reactflow/dist/style.css";
 
