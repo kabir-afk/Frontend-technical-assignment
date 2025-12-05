@@ -1,28 +1,43 @@
 // textNode.js
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Handle, Position } from "reactflow";
 
 export const TextNode = ({ id, data }) => {
   const [currText, setCurrText] = useState(data?.text || "{{input}}");
+  const [height, setHeight] = useState("auto");
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (textareaRef.current && height === "fit") {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, []);
 
   const handleTextChange = (e) => {
     setCurrText(e.target.value);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
   };
 
   return (
-    <div style={{ width: 200, height: 80, border: "1px solid black" }}>
+    <div style={{ width: 200, border: "1px solid black" }}>
       <div>
         <span>Text</span>
       </div>
       <div>
-        <label>
+        <label className="block w-full">
           Text:
-          <input
-            type="text"
+          <textarea
+            style={{ height }}
+            ref={textareaRef}
             value={currText}
             onChange={handleTextChange}
-            className="border-2 border-amber-500"
+            onInput={handleTextChange}
+            rows={1}
+            className="w-full p-1 resize-none overflow-hidden border rounded"
           />
         </label>
       </div>
