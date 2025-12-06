@@ -3,8 +3,6 @@ import { Handle, Position } from "reactflow";
 
 export const NAME = ({ data, id }) => {
   const { label, handles } = data;
-  console.log(label, handles);
-
   const [currName, setCurrName] = useState(
     data?.inputName || id.replace("customInput-", "input_")
   );
@@ -24,7 +22,32 @@ export const NAME = ({ data, id }) => {
           <input type="text" value={currName} onChange={handleNameChange} />
         </label>
       </div>
-      <Handle type="source" position={Position.Right} id={`${id}-value`} />
+      {Array.from({ length: handles.source }).map((_, index) => {
+        return (
+          <Handle
+            key={index}
+            type="source"
+            position={Position.Right}
+            id={`${id}-value`}
+            style={{
+              top: `${((index + 1) * 100) / (handles.source + 1)}%`,
+            }}
+          />
+        );
+      })}
+      {Array.from({ length: handles.target }).map((_, index) => {
+        return (
+          <Handle
+            key={index}
+            type="target"
+            position={Position.Left}
+            id={`${id}-value`}
+            style={{
+              top: `${((index + 1) * 100) / (handles.target + 1)}%`,
+            }}
+          />
+        );
+      })}
     </div>
   );
 };
