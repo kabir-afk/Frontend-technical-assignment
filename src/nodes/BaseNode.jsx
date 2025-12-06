@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Handle, Position } from "reactflow";
 
 export const NAME = ({ data, id }) => {
+  const { label, handles } = data;
+  console.log(label, handles);
+
   const [currName, setCurrName] = useState(
     data?.inputName || id.replace("customInput-", "input_")
   );
@@ -12,7 +15,9 @@ export const NAME = ({ data, id }) => {
 
   return (
     <div style={{ width: 200, border: "1px solid" }}>
-      <div>{/* <span>{type}</span> */}</div>
+      <div>
+        <span>{label}</span>
+      </div>
       <div>
         <label>
           Name:
