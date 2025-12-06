@@ -11,6 +11,7 @@ import { LLMNode } from "./nodes/llmNode.jsx";
 import { OutputNode } from "./nodes/outputNode.jsx";
 import { TextNode } from "./nodes/textNode.jsx";
 
+import { nodeConfigs } from "./nodeConfig.js";
 import "reactflow/dist/style.css";
 
 const gridSize = 20;
@@ -46,7 +47,7 @@ export const PipelineUI = () => {
   } = useStore(selector, shallow);
 
   const getInitNodeData = (nodeID, type) => {
-    let nodeData = { id: nodeID, nodeType: `${type}` };
+    let nodeData = { id: nodeID, nodeType: `${type}`, ...nodeConfigs[type] };
     return nodeData;
   };
 
