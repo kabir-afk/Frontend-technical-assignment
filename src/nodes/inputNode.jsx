@@ -1,16 +1,23 @@
 // inputNode.js
-
+import { useStore } from "../store";
 import { useState } from "react";
 import { Handle, Position } from "reactflow";
 
 export const InputNode = ({ id, data }) => {
   const [currName, setCurrName] = useState(
-    data?.inputName || id.replace("customInput-", "input_")
+    data?.name.replace("customInput-", "input_")
   );
   const [inputType, setInputType] = useState(data.inputType || "Text");
 
   const handleNameChange = (e) => {
     setCurrName(e.target.value);
+    useStore.setState((state) => ({
+      nodes: state.nodes.map((node) =>
+        node.id === id
+          ? { ...node, data: { ...node.data, name: e.target.value } }
+          : node
+      ),
+    }));
   };
 
   const handleTypeChange = (e) => {
