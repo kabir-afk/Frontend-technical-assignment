@@ -96,6 +96,22 @@ export const TextNode = ({ id, data }) => {
           backgroundColor: "white",
         }}
       />
+      {isJSVariable.size > 0 &&
+        Array.from(isJSVariable).map((_, index) => {
+          return (
+            <Handle
+              key={index}
+              type="target"
+              position={Position.Left}
+              id={`${id}-var-output`}
+              style={{
+                top: `${((index + 1) * 100) / (isJSVariable.size + 1)}%`,
+                border: "1px solid blue",
+                backgroundColor: "white",
+              }}
+            />
+          );
+        })}
     </div>
   );
 };
