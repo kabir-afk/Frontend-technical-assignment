@@ -1,16 +1,24 @@
 // outputNode.js
 
+import { useStore } from "../store";
 import { useState } from "react";
 import { Handle, Position } from "reactflow";
 
 export const OutputNode = ({ id, data }) => {
   const [currName, setCurrName] = useState(
-    data?.outputName || id.replace("customOutput-", "output_")
+    data?.name.replace("customOutput-", "output_")
   );
   const [outputType, setOutputType] = useState(data.outputType || "Text");
 
   const handleNameChange = (e) => {
     setCurrName(e.target.value);
+    useStore.setState((state) => ({
+      nodes: state.nodes.map((node) =>
+        node.id === id
+          ? { ...node, data: { ...node.data, name: e.target.value } }
+          : node
+      ),
+    }));
   };
 
   const handleTypeChange = (e) => {
@@ -42,11 +50,11 @@ export const OutputNode = ({ id, data }) => {
             width="24px"
             fill="#5957A3"
           >
-            <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v80h-80v-80H200v560h560v-80h80v80q0 33-23.5 56.5T760-120H200Zm480-160-56-56 103-104H360v-80h367L624-624l56-56 200 200-200 200Z" />
+            <path d="M160-160q-33 0-56.5-23.5T80-240v-120h80v120h640v-480H160v120H80v-120q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm300-140-56-58 83-82H80v-80h407l-83-82 56-58 180 180-180 180Z" />
           </svg>
           <span>Output</span>
         </div>
-        <p className="text-xs">Output of your workflow</p>
+        <p className="text-xs">Pass data of different types in your workflow</p>
       </div>
       <div className="flex flex-col justify-center items-center px-2">
         <label>
