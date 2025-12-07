@@ -1,11 +1,16 @@
 import { Handle, Position } from "reactflow";
 
 export const NAME = ({ data, id }) => {
-  const { label, handles } = data;
-
+  const { label, handles, Icon } = data;
   return (
     <div style={{ width: 200, border: "1px solid" }}>
-      <div>
+      <div className="flex gap-1 bg-purple-light text-purple-dark font-medium">
+        {Icon ? (
+          <div
+            className="node-icon"
+            dangerouslySetInnerHTML={{ __html: Icon }}
+          />
+        ) : null}
         <span>{label}</span>
       </div>
       <div>This is {label} node</div>
