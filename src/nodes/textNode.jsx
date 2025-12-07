@@ -4,7 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import { Handle, Position } from "reactflow";
 
 export const TextNode = ({ id, data }) => {
-  const nodes = useStore((state) => state.nodes);
+  const { nodes, edges, onConnect } = useStore((state) => ({
+    nodes: state.nodes,
+    edges: state.edges,
+    onConnect: state.onConnect,
+  }));
   const [isError, setIsError] = useState(false);
   const [currText, setCurrText] = useState(data?.text || "{{input}}");
   const [isJSVariable, setIsJSVariable] = useState(new Set());
@@ -35,13 +39,43 @@ export const TextNode = ({ id, data }) => {
     const variables = Array.from(isJSVariable).map((e) =>
       e.replace(/\{\{|\}\}/g, "")
     );
-    const nodeNames = nodes.map((node) => node.data.name);
-    variables.forEach((variable) => {
-      setIsError(
-        nodeNames.find((nodeName) => nodeName === variable) ? false : true
-      );
+
+    if (variables.length === 0) {
+      setIsError(false);
+      return;
+    }
+
+    let hasError = false;
+
+    variables.forEach((variable, index) => {
+      const matchingNode = nodes.find((node) => node.data?.name === variable);
+
+      if (!matchingNode) {
+        hasError = true;
+        // console.error("Invalid variable:", variable);
+      } else {
+        const targetHandleId = `${id}-var-${index}`;
+
+        const edgeExists = edges.some(
+          (edge) =>
+            edge.source === matchingNode.id &&
+            edge.target === id &&
+            edge.targetHandle === targetHandleId
+        );
+
+        if (!edgeExists) {
+          onConnect({
+            source: matchingNode.id,
+            sourceHandle: `${matchingNode.id}-value`,
+            target: id,
+            targetHandle: targetHandleId,
+          });
+        }
+      }
     });
-  }, [isJSVariable, nodes]);
+
+    setIsError(hasError);
+  }, [isJSVariable, nodes, edges, id, onConnect]);
 
   return (
     <div
@@ -103,7 +137,7 @@ export const TextNode = ({ id, data }) => {
               key={index}
               type="target"
               position={Position.Left}
-              id={`${id}-var-output`}
+              id={`${id}-var-${index}`}
               style={{
                 top: `${((index + 1) * 100) / (isJSVariable.size + 1)}%`,
                 border: "1px solid blue",
