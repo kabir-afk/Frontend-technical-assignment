@@ -5,6 +5,7 @@ import { Handle, Position } from "reactflow";
 
 export const TextNode = ({ id, data }) => {
   const [currText, setCurrText] = useState(data?.text || "{{input}}");
+  const [isJSVariable, setIsJSVariable] = useState(new Set());
   const [height, setHeight] = useState("auto");
   const textareaRef = useRef(null);
 
@@ -20,7 +21,17 @@ export const TextNode = ({ id, data }) => {
     if (textareaRef.current) {
       setHeight(`${textareaRef.current.scrollHeight}px`);
     }
+    const matches = e.target.value.match(/\{\{.*?\}\}/g);
+    if (matches) {
+      setIsJSVariable(new Set(matches));
+    } else {
+      setIsJSVariable(new Set());
+    }
   };
+
+  useEffect(() => {
+    console.log(Array.from(isJSVariable));
+  }, [isJSVariable]);
 
   return (
     <div
@@ -56,7 +67,6 @@ export const TextNode = ({ id, data }) => {
             ref={textareaRef}
             value={currText}
             onChange={handleTextChange}
-            onInput={handleTextChange}
             rows={1}
             className="w-full p-1 resize-none overflow-hidden border-2 border-purple-light rounded-sm focus:border-purple-light focus:outline-none focus:ring-0"
           />
