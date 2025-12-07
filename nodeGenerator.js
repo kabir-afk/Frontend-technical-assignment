@@ -18,7 +18,7 @@ async function generate() {
         await fs.writeFile(`./src/nodes/${name}.jsx`, output);
 
         const toolbar = await fs.readFile("./src/toolbar.jsx", "utf-8");
-        const newNode = `<DraggableNode type="${type}" label="${value.label}" />\n        <span />`;
+        const newNode = `<DraggableNode type="${type}" label="${value.label}">${value.Icon}</DraggableNode>\n        <span />`;
         if (toolbar.includes(newNode)) {
           throw new Error(`Node '${name}' already exists in toolbar`);
         }
