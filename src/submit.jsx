@@ -1,6 +1,7 @@
 // submit.js
 import { useStore } from "./store";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export const SubmitButton = () => {
@@ -8,6 +9,8 @@ export const SubmitButton = () => {
     nodes: state.nodes,
     edges: state.edges,
   }));
+  const [isValidGraph, setIsValidGraph] = useState(false);
+  useEffect(() => setIsValidGraph(edges.length >= 1 ? true : false), [edges]);
 
   const handleSubmit = async () => {
     try {
@@ -39,7 +42,10 @@ export const SubmitButton = () => {
       <button
         type="submit"
         onClick={handleSubmit}
-        className="border cursor-pointer"
+        className={`border ${
+          isValidGraph ? "cursor-pointer" : "cursor-not-allowed"
+        }`}
+        disabled={!isValidGraph}
       >
         Submit
       </button>
