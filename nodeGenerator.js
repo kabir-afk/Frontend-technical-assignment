@@ -10,7 +10,7 @@ async function generate() {
         console.error("Node already exists");
       } catch (error) {
         console.log("Creating Node");
-        const name = key;
+        const name = key.charAt(0).toUpperCase() + key.slice(1);
         const type = key;
 
         const template = await fs.readFile("./src/nodes/BaseNode.jsx", "utf8");
