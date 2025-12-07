@@ -47,7 +47,12 @@ export const PipelineUI = () => {
   } = useStore(selector, shallow);
 
   const getInitNodeData = (nodeID, type) => {
-    let nodeData = { id: nodeID, nodeType: `${type}`, ...nodeConfigs[type] };
+    let nodeData = {
+      id: nodeID,
+      name: nodeID,
+      nodeType: `${type}`,
+      ...nodeConfigs[type],
+    };
     return nodeData;
   };
 
