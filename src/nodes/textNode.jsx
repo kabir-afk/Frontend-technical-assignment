@@ -1,9 +1,11 @@
 // textNode.js
-
+import { useStore } from "../store";
 import { useState, useRef, useEffect } from "react";
 import { Handle, Position } from "reactflow";
 
 export const TextNode = ({ id, data }) => {
+  const nodes = useStore((state) => state.nodes);
+  const [isError, setIsError] = useState(false);
   const [currText, setCurrText] = useState(data?.text || "{{input}}");
   const [isJSVariable, setIsJSVariable] = useState(new Set());
   const [height, setHeight] = useState("auto");
@@ -30,8 +32,16 @@ export const TextNode = ({ id, data }) => {
   };
 
   useEffect(() => {
-    console.log(Array.from(isJSVariable));
-  }, [isJSVariable]);
+    const variables = Array.from(isJSVariable).map((e) =>
+      e.replace(/\{\{|\}\}/g, "")
+    );
+    const nodeNames = nodes.map((node) => node.data.name);
+    variables.forEach((variable) => {
+      setIsError(
+        nodeNames.find((nodeName) => nodeName === variable) ? false : true
+      );
+    });
+  }, [isJSVariable, nodes]);
 
   return (
     <div
@@ -61,6 +71,11 @@ export const TextNode = ({ id, data }) => {
         </p>
       </div>
       <div className="px-2 py-1">
+        {isError && (
+          <div className=" p-1 mb-1 text-red-600 bg-red-100 font-semibold text-sm rounded-md">
+            Please delete invalid variables
+          </div>
+        )}
         <label className="block w-full">
           <textarea
             style={{ height }}
