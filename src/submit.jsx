@@ -24,7 +24,7 @@ export const SubmitButton = () => {
       });
       const { num_nodes, num_edges, is_dag } = res.data;
       toast.custom(() => (
-        <div className="flex flex-col bg-white p-2 rounded-md">
+        <div className="flex flex-col border p-2 rounded-md bg-purple-light font-semibold">
           <p>Number of Nodes : {num_nodes}</p>
           <p>Number of Edges : {num_edges}</p>
           <p>Is pipeline DAG : {JSON.stringify(is_dag)}</p>
