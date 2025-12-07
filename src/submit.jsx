@@ -42,7 +42,7 @@ export const SubmitButton = () => {
       <button
         type="submit"
         onClick={handleSubmit}
-        className={`border ${
+        className={`border p-2 rounded-md bg-purple-light text-purple-medium font-semibold ${
           isValidGraph ? "cursor-pointer" : "cursor-not-allowed"
         }`}
         disabled={!isValidGraph}
