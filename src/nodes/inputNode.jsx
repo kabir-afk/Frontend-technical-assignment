@@ -68,7 +68,12 @@ export const InputNode = ({ id, data }) => {
           </select>
         </label>
       </div>
-      <Handle type="source" position={Position.Right} id={`${id}-value`} />
+      <Handle
+        type="source"
+        position={Position.Right}
+        id={`${id}-value`}
+        style={{ border: "1px solid blue", backgroundColor: "white" }}
+      />
     </div>
   );
 };
