@@ -42,8 +42,8 @@ export const InputNode = ({ id, data }) => {
         </div>
         <p className="text-xs">Pass data of different types in your workflow</p>
       </div>
-      <div className="flex flex-col justify-center items-center">
-        <label className="w-9/10">
+      <div className="flex flex-col justify-center items-center px-2">
+        <label>
           <input
             type="text"
             value={currName}
@@ -51,8 +51,8 @@ export const InputNode = ({ id, data }) => {
             className="w-full bg-purple-light text-purple-dark my-2 rounded-sm text-center font-medium border-transparent focus:border-purple-light focus:outline-none focus:ring-0"
           />
         </label>
-        <label className="w-9/10 text-xs">
-          <div className="w-full flex justify-between">
+        <label className="w-full text-xs">
+          <div className="flex justify-between">
             <span className="font-bold">Type:</span>
             <span className="bg-purple-medium text-white rounded-sm px-1">
               Dropdown
@@ -61,7 +61,7 @@ export const InputNode = ({ id, data }) => {
           <select
             value={inputType}
             onChange={handleTypeChange}
-            className="w-full text-base border-2 border-purple-light rounded-sm my-1"
+            className="w-full text-base border-2 border-purple-light rounded-sm my-1 focus:border-purple-light focus:outline-none focus:ring-0"
           >
             <option value="Text">Text</option>
             <option value="File">File</option>
